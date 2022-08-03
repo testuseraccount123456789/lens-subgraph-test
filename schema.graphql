@@ -1,0 +1,19 @@
+type Profile @entity {
+  id: ID!
+  profileId: BigInt!
+  creator: Bytes! # address
+}
+
+type SocialGraph @entity {
+  id: ID! # address
+  following: [Profile!]!
+}
+
+type FollowApproved @entity {
+    id: ID!
+
+    addresses: [String!]!
+
+    approved: [Bool!]!
+
+}
