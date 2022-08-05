@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts"
 import { Approval, ApprovalForAll, BaseInitialized, Collected, CollectModuleWhitelisted, CollectNFTDeployed, CollectNFTInitialized, CommentCreated, DefaultProfileSet, DispatcherSet, EmergencyAdminSet, FeeModuleBaseConstructed, Followed, FollowModuleSet, FollowModuleWhitelisted, FollowNFTDelegatedPowerChanged, FollowNFTDeployed, FollowNFTInitialized, FollowNFTTransferred, FollowNFTURISet, FollowsApproved, GovernanceSet, MirrorCall, MirrorCreated, ModuleBaseConstructed, ModuleGlobalsCurrencyWhitelisted, ModuleGlobalsGovernanceSet, ModuleGlobalsTreasuryFeeSet, ModuleGlobalsTreasurySet, PostCreated, ProfileCreated, ProfileCreatorWhitelisted, ProfileImageURISet, ReferenceModuleWhitelisted, StateSet, Transfer } from "../generated/Contract/Contract"
-import { Profile, SocialGraph, FollowApproved, Mirror, FollowNftTransferred, HandleGovernanceSet, HandleModuleBaseConstructed, HandleModuleGlobalsCurrencyWhitelisted } from "../generated/schema"
+import { Profile, SocialGraph, FollowApproved, Mirror, FollowNftTransferred, HandleGovernanceSet, HandleModuleBaseConstructed, HandleModuleGlobalsCurrencyWhitelisted, HandleModuleGlobalsGovernanceSet } from "../generated/schema"
 
 export function handleApproval(event: Approval): void {
 
@@ -229,7 +229,15 @@ export function handleModuleGlobalsCurrencyWhitelisted(event: ModuleGlobalsCurre
 }
 
 export function handleModuleGlobalsGovernanceSet(event: ModuleGlobalsGovernanceSet): void {
+  let entity = HandleModuleGlobalsGovernanceSet.load(event.transaction.hash.toString());
+  if (!entity) {
+    entity = new HandleModuleGlobalsGovernanceSet(event.transaction.hash.toString());
 
+  }
+
+  entity.prevGovernance = event.params.prevGovernance.toString();
+  entity.newGovernance = event.params.newGovernance.toString();
+  entity.save();
 }
 //end here
 export function handleModuleGlobalsTreasuryFeeSet(event: ModuleGlobalsTreasuryFeeSet): void {

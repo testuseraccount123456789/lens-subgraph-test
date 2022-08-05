@@ -59,3 +59,9 @@ type HandleModuleGlobalsCurrencyWhitelisted @entity {
     whitelisted: Boolean!
 }
 
+type HandleModuleGlobalsGovernanceSet @entity {
+    id: ID!
+    prevGovernance: ID!
+    newGovernance: ID!
+}
+
