@@ -91,4 +91,4 @@ dataSources:
           handler: handleStateSet
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer  
-      file: ./src/mapping/contract.ts
+      file: ./mapping/contract.ts
