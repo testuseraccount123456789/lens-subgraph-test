@@ -80,14 +80,21 @@ export function handleFollowNFTTransferred(event: FollowNFTTransferred): void {
   let nft = FollowNftTransferred.load(event.params.profileId.toHexString())
   if (nft == null) {
     nft = new FollowNftTransferred(event.params.profileId.toHexString())
+    nft.from = event.params.from.toString()
+    nft.to = event.params.to.toString()
+    nft.timestamp = event.params.timestamp
+    nft.followNFTID = event.params.followNFTId
+    nft.profileId = event.params.profileId
+    nft.save()
+  } else {
+    nft.from = event.params.from.toString()
+    nft.to = event.params.to.toString()
+    nft.timestamp = event.params.timestamp
+    nft.followNFTID = event.params.followNFTId
+    nft.profileId = event.params.profileId
     nft.save()
   }
-  nft.from = event.params.from
-  nft.to = event.params.to
-  nft.timestamp = event.params.timestamp
-  nft.followNFTID = event.params.followNFTId
-  nft.profileId = event.params.profileId
-  nft.save()
+  
 }
 
 export function handleFollowNFTURISet(event: FollowNFTURISet): void {
@@ -186,18 +193,27 @@ export function handleMirrorCreated(event: MirrorCreated): void {
 
   if (!entity) {
     entity = new Mirror(event.transaction.hash.toString());
+    entity.profileId = event.params.profileId;
+    entity.pubId = event.params.pubId;
+    entity.profileIdPointed = event.params.profileIdPointed;
+    entity.pubIdPointed = event.params.pubIdPointed;
+    entity.referenceModule = event.params.referenceModule;
+    entity.referenceModuleReturnData = event.params.referenceModuleReturnData;
+    entity.timestamp = event.params.timestamp;
+    entity.save();
 
-
+  } else {
+    entity.profileId = event.params.profileId;
+    entity.pubId = event.params.pubId;
+    entity.profileIdPointed = event.params.profileIdPointed;
+    entity.pubIdPointed = event.params.pubIdPointed;
+    entity.referenceModule = event.params.referenceModule;
+    entity.referenceModuleReturnData = event.params.referenceModuleReturnData;
+    entity.timestamp = event.params.timestamp;
+    entity.save();
   }
 
-  entity.profileId = event.params.profileId;
-  entity.pubId = event.params.pubId;
-  entity.profileIdPointed = event.params.profileIdPointed;
-  entity.pubIdPointed = event.params.pubIdPointed;
-  entity.referenceModule = event.params.referenceModule;
-  entity.referenceModuleReturnData = event.params.referenceModuleReturnData;
-  entity.timestamp = event.params.timestamp;
-  entity.save();
+  
 
 };
 
@@ -205,12 +221,16 @@ export function handleModuleBaseConstructed(event: ModuleBaseConstructed): void 
   let entity = HandleModuleBaseConstructed.load(event.params.hub.toString());
   if (!entity) {
     entity = new HandleModuleBaseConstructed(event.params.hub.toString());
-
+    entity.hub = event.params.hub;
+    entity.timestamp = event.params.timestamp;
+    entity.save();
+  } else {
+    entity.hub = event.params.hub;
+    entity.timestamp = event.params.timestamp;
+    entity.save();
   }
 
-  entity.hub = event.params.hub;
-  entity.timestamp = event.params.timestamp;
-  entity.save();
+  
 
 
 }
@@ -219,25 +239,34 @@ export function handleModuleGlobalsCurrencyWhitelisted(event: ModuleGlobalsCurre
   let entity = HandleModuleGlobalsCurrencyWhitelisted.load(event.params.currency.toString());
   if (!entity) {
     entity = new HandleModuleGlobalsCurrencyWhitelisted(event.params.currency.toString());
-
+    entity.currency = event.params.currency.toString();
+    entity.prevWhitelisted = event.params.prevWhitelisted;
+    entity.whitelisted = event.params.whitelisted;
+    entity.save();
+  } else {
+    entity.currency = event.params.currency.toString();
+    entity.prevWhitelisted = event.params.prevWhitelisted;
+    entity.whitelisted = event.params.whitelisted;
+    entity.save();
   }
 
-  entity.currency = event.params.currency.toString();
-  entity.prevWhitelisted = event.params.prevWhitelisted;
-  entity.whitelisted = event.params.whitelisted;
-  entity.save();
+  
 }
 
 export function handleModuleGlobalsGovernanceSet(event: ModuleGlobalsGovernanceSet): void {
   let entity = HandleModuleGlobalsGovernanceSet.load(event.transaction.hash.toString());
   if (!entity) {
     entity = new HandleModuleGlobalsGovernanceSet(event.transaction.hash.toString());
-
+    entity.prevGovernance = event.params.prevGovernance.toString();
+    entity.newGovernance = event.params.newGovernance.toString();
+    entity.save();
+  } else {
+    entity.prevGovernance = event.params.prevGovernance.toString();
+    entity.newGovernance = event.params.newGovernance.toString();
+    entity.save();
   }
 
-  entity.prevGovernance = event.params.prevGovernance.toString();
-  entity.newGovernance = event.params.newGovernance.toString();
-  entity.save();
+  
 }
 //end here
 export function handleModuleGlobalsTreasuryFeeSet(event: ModuleGlobalsTreasuryFeeSet): void {
@@ -257,6 +286,7 @@ export function handleProfileCreated(event: ProfileCreated): void {
 
   profile.profileId = event.params.profileId
   profile.creator = event.params.to
+  profile.followNFTURI = event.params.followNFTURI
 
   profile.save()
 }

@@ -33,16 +33,16 @@ type FollowNftTransferred @entity {
   id: ID!
   profileId: BigInt!
   followNFTID: BigInt!
-  from: Bytes!
-  to: Bytes!
+  from: String!
+  to: String!
   timestamp: BigInt!
   data: String!
 }
 
 type HandleGovernanceSet @entity {
     id: ID!
-    prevGovernance: ID!
-    newGovernance: ID!
+    prevGovernance: String!
+    newGovernance: String!
     timestamp: BigInt!
 }
 
@@ -61,7 +61,7 @@ type HandleModuleGlobalsCurrencyWhitelisted @entity {
 
 type HandleModuleGlobalsGovernanceSet @entity {
     id: ID!
-    prevGovernance: ID!
-    newGovernance: ID!
+    prevGovernance: String!
+    newGovernance: String!
 }
 
