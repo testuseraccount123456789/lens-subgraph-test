@@ -36,7 +36,6 @@ type FollowNftTransferred @entity {
   from: String!
   to: String!
   timestamp: BigInt!
-  data: String!
 }
 
 type HandleGovernanceSet @entity {

@@ -1,7 +1,7 @@
 import { BigInt } from "@graphprotocol/graph-ts"
 import { Approval, ApprovalForAll, BaseInitialized, Collected, CollectModuleWhitelisted, CollectNFTDeployed, CollectNFTInitialized, CommentCreated, DefaultProfileSet, DispatcherSet, EmergencyAdminSet, FeeModuleBaseConstructed, Followed, FollowModuleSet, FollowModuleWhitelisted, FollowNFTDelegatedPowerChanged, FollowNFTDeployed, FollowNFTInitialized, FollowNFTTransferred, FollowNFTURISet, FollowsApproved, GovernanceSet, MirrorCall, MirrorCreated, ModuleBaseConstructed, ModuleGlobalsCurrencyWhitelisted, ModuleGlobalsGovernanceSet, ModuleGlobalsTreasuryFeeSet, ModuleGlobalsTreasurySet, PostCreated, ProfileCreated, ProfileCreatorWhitelisted, ProfileImageURISet, ReferenceModuleWhitelisted, StateSet, Transfer } from "../generated/Contract/Contract"
 import { Profile, SocialGraph, FollowApproved, Mirror, FollowNftTransferred, HandleGovernanceSet, HandleModuleBaseConstructed, HandleModuleGlobalsCurrencyWhitelisted, HandleModuleGlobalsGovernanceSet } from "../generated/schema"
-
+//FollowNftTransferred,
 export function handleApproval(event: Approval): void {
 
 }
@@ -73,22 +73,22 @@ export function handleFollowNFTDeployed(event: FollowNFTDeployed): void {
 export function handleFollowNFTInitialized(event: FollowNFTInitialized): void {
 
 }
-//start here
-export function handleFollowNFTTransferred(event: FollowNFTTransferred): void {
+// start here
+export function handleNFTTransferred(event: FollowNFTTransferred): void {
 
 
   let nft = FollowNftTransferred.load(event.params.profileId.toHexString())
   if (nft == null) {
     nft = new FollowNftTransferred(event.params.profileId.toHexString())
-    nft.from = event.params.from.toString()
-    nft.to = event.params.to.toString()
+    nft.from = event.params.from.toHexString()
+    nft.to = event.params.to.toHexString()
     nft.timestamp = event.params.timestamp
     nft.followNFTID = event.params.followNFTId
     nft.profileId = event.params.profileId
     nft.save()
   } else {
-    nft.from = event.params.from.toString()
-    nft.to = event.params.to.toString()
+    nft.from = event.params.from.toHexString()
+    nft.to = event.params.to.toHexString()
     nft.timestamp = event.params.timestamp
     nft.followNFTID = event.params.followNFTId
     nft.profileId = event.params.profileId
@@ -96,6 +96,7 @@ export function handleFollowNFTTransferred(event: FollowNFTTransferred): void {
   }
   
 }
+
 
 export function handleFollowNFTURISet(event: FollowNFTURISet): void {
 
@@ -202,15 +203,6 @@ export function handleMirrorCreated(event: MirrorCreated): void {
     entity.timestamp = event.params.timestamp;
     entity.save();
 
-  } else {
-    entity.profileId = event.params.profileId;
-    entity.pubId = event.params.pubId;
-    entity.profileIdPointed = event.params.profileIdPointed;
-    entity.pubIdPointed = event.params.pubIdPointed;
-    entity.referenceModule = event.params.referenceModule;
-    entity.referenceModuleReturnData = event.params.referenceModuleReturnData;
-    entity.timestamp = event.params.timestamp;
-    entity.save();
   }
 
   
